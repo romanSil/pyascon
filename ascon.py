@@ -216,8 +216,8 @@ def ascon_finalize(S, rate, a, key):
     returns the tag, updates S
     """
     assert(len(key) == 16)
-    S[rate/8+0] ^= bytes_to_int(key[0:8])
-    S[rate/8+1] ^= bytes_to_int(key[8:16])
+    S[rate//8+0] ^= bytes_to_int(key[0:8])
+    S[rate//8+1] ^= bytes_to_int(key[8:16])
 
     ascon_permutation(S, a)
 
@@ -269,13 +269,13 @@ def get_random_bytes(num):
     return to_bytes(os.urandom(num))
 
 def zero_bytes(n):
-    return n * "\x00"
+    return n * b'\x00'
 
 def to_bytes(l): # where l is a list or bytearray or bytes
     return bytes(bytearray(l))
 
 def bytes_to_int(bytes):
-    return sum([ord(bi) << ((len(bytes) - 1 - i)*8) for i, bi in enumerate(to_bytes(bytes))])
+    return sum([bi << ((len(bytes) - 1 - i)*8) for i, bi in enumerate(bytes)])
 
 def int_to_bytes(integer, nbytes):
     return to_bytes([(integer >> ((nbytes - 1 - i) * 8)) % 256 for i in range(nbytes)])
@@ -284,7 +284,8 @@ def rotr(val, r):
     return ((val >> r) ^ (val << (64-r))) % (1 << 64)
 
 def bytes_to_hex(b):
-    return "".join(x.encode('hex') for x in b)
+    import codecs
+    return codecs.encode(b, 'hex')
 
 def printstate(S, description=""):
     print(" " + description)
