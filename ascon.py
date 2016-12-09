@@ -287,12 +287,12 @@ def bytes_to_hex(b):
     return "".join(x.encode('hex') for x in b)
 
 def printstate(S, description=""):
-    print " " + description
-    print " ".join(["{s:016x}".format(s=s) for s in S])
+    print(" " + description)
+    print(" ".join(["{s:016x}".format(s=s) for s in S]))
 
 def printwords(S, description=""):
-    print " " + description
-    print "\n".join(["  x{i}={s:016x}".format(**locals()) for i, s in enumerate(S)])
+    print(" " + description)
+    print("\n".join(["  x{i}={s:016x}".format(**locals()) for i, s in enumerate(S)]))
 
 
 # === some demo if called directly ===
@@ -300,7 +300,7 @@ def printwords(S, description=""):
 if __name__ == "__main__":
     variant = "Ascon-128"  # or "Ascon-128a"
     keysize = 16
-    print "=== demo encryption using {variant} ===".format(variant=variant)
+    print("=== demo encryption using {variant} ===".format(variant=variant))
 
     key = zero_bytes(keysize)
     nonce = zero_bytes(keysize)
@@ -313,7 +313,7 @@ if __name__ == "__main__":
     receivedplaintext = ascon_decrypt(key, nonce, associateddata, ciphertext, variant)
 
     if receivedplaintext == None: 
-        print "verification failed!"
+        print("verification failed!")
         
     data = [
             ("key", key), 
@@ -326,4 +326,4 @@ if __name__ == "__main__":
            ]
     maxlen = max([len(text) for (text, val) in data])
     for text, val in data:
-        print "{text}:{align} 0x{val} ({length} bytes)".format(text=text, align=((maxlen - len(text)) * " "), val=bytes_to_hex(val), length=len(val))
+        print("{text}:{align} 0x{val} ({length} bytes)".format(text=text, align=((maxlen - len(text)) * " "), val=bytes_to_hex(val), length=len(val)))
